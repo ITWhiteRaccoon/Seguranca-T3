@@ -8,4 +8,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.36" />
+      <PackageReference Include="TextCopy" Version="6.2.0" />
+    </ItemGroup>
+
 </Project>
