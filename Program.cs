@@ -73,6 +73,20 @@ public class Program
         }
     }
 
+    public static void CifraMsg(string msg)
+    {
+        var bytes = Encoding.UTF8.GetBytes(msg);
+
+        using var aes = Aes.Create();
+        aes.Mode = CipherMode.CBC;
+        aes.Key = _S.ToByteArray();
+        aes.GenerateIV();
+
+        var cifrador = aes.CreateEncryptor(aes.Key, aes.IV);
+        var texto = cifrador.TransformFinalBlock(bytes, 0, bytes.Length);
+        AnsiConsole.MarkupLine($"Texto cifrado: [green]{BitConverter.ToString(texto).Replace("-", null)}[/]");
+    }
+
     public static void DecifraMsg()
     {
         DecifraMsg(_msg, _S);
@@ -91,6 +105,8 @@ public class Program
         var decifrador = aes.CreateDecryptor(aes.Key, aes.IV);
         var texto = Encoding.UTF8.GetString(decifrador.TransformFinalBlock(textoCifrado, 0, textoCifrado.Length));
         AnsiConsole.MarkupLine($"Texto decifrado: [bold]{texto}[/]");
+
+        CifraMsg(texto.Reverse().ToString());
     }
 
     public static void CalculaS()
