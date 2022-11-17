@@ -27,16 +27,15 @@ public class Program
         "45C3F234391ED8952CD2C716C46D2B39D22155EB2D3BC522B17F5A790877BBBD536AD3409657957A78DABC5ECB335E048101AA5340595E853B443074F653433DC80C850D6DCA13C13B805FA3A45E24C2C9B7468F3D62C33947CFD176C8DE7713C03DF1F9598E3E09099AEB49CC00662E6EC1FB7355CCCC58A309972FF957CAF4",
         NumberStyles.HexNumber);
 
-    private static BigInteger _B = BigInteger.Parse(
+    private static readonly BigInteger _B = BigInteger.Parse(
         "01C3EB24A247FD5E63D291BEFD4A7F2C33EF40D2EDAF9A494A33A7E87AB081A6E45817FE0A730BACB2033A9FC9C21F21BB147597F95B76F42297E71B0FDDB717CE70C75A7D539F857A8A24ABF5AC00B0F6DF0D906A3397487DCB56356F3A2A764AB91310F279EBBADE7200B77126EBB30E1883B9BBA57F1F2C034467BE2EFFCE",
         NumberStyles.HexNumber);
 
-    private static BigInteger _S = BigInteger.Parse(
+    private static readonly BigInteger _S = BigInteger.Parse(
         "1FE4DACD4977D1026CB66F4E909F3729",
         NumberStyles.HexNumber);
 
-    private static string _msg =
-        "73819C658B473CAD224CCA61DE9AE1D45EC373CC5DA0048DA4F0B2806B0153E4426D421A7061E1804DDA0D9A49A6D76ED84B9248C02F1B1D2EC46ADA23F516210354A84BD545D0C1D0B08503A319CCDFD8EDB17891442630CB312E9C5A70AAF3F947485C41970A672D54E8B49222A219";
+    private const string _msg = "73819C658B473CAD224CCA61DE9AE1D45EC373CC5DA0048DA4F0B2806B0153E4426D421A7061E1804DDA0D9A49A6D76ED84B9248C02F1B1D2EC46ADA23F516210354A84BD545D0C1D0B08503A319CCDFD8EDB17891442630CB312E9C5A70AAF3F947485C41970A672D54E8B49222A219";
 
     public static void Main(string[] args)
     {
@@ -73,7 +72,7 @@ public class Program
         }
     }
 
-    public static void CifraMsg(string msg)
+    private static void CifraMsg(string msg)
     {
         var bytes = Encoding.UTF8.GetBytes(msg);
 
@@ -87,12 +86,12 @@ public class Program
         AnsiConsole.MarkupLine($"Texto cifrado: [green]{BitConverter.ToString(texto).Replace("-", null)}[/]");
     }
 
-    public static void DecifraMsg()
+    private static void DecifraMsg()
     {
         DecifraMsg(_msg, _S);
     }
 
-    public static void DecifraMsg(string msg, BigInteger S)
+    private static void DecifraMsg(string msg, BigInteger S)
     {
         var iv = BigInteger.Parse(msg[..32], NumberStyles.HexNumber).ToByteArray();
         var textoCifrado = BigInteger.Parse(msg[32..], NumberStyles.HexNumber).ToByteArray();
@@ -109,12 +108,12 @@ public class Program
         CifraMsg(texto.Reverse().ToString());
     }
 
-    public static void CalculaS()
+    private static void CalculaS()
     {
         CalculaS(_B);
     }
 
-    public static void CalculaS(BigInteger B)
+    private static void CalculaS(BigInteger B)
     {
         var V = BigInteger.ModPow(B, _a, _p);
         using var sha = SHA256.Create();
@@ -126,7 +125,7 @@ public class Program
         AnsiConsole.WriteLine(SStr);
     }
 
-    public static void GeraValorA()
+    private static void GeraValorA()
     {
         var aStr = _a.ToString("X");
         AnsiConsole.MarkupLine("\n[green]a:[/]");
