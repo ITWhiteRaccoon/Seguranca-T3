@@ -23,6 +23,10 @@ public class Program
         "45C772344A83A45B5D45AF04B56222CB35B596F477EA0544C74E580E8162B04EF2508DABA2DDAB09129142463888F475E930A56A33AB4E3C1C1BD127DE7341CA",
         NumberStyles.HexNumber);
 
+    private static readonly BigInteger _A = BigInteger.Parse(
+        "45C3F234391ED8952CD2C716C46D2B39D22155EB2D3BC522B17F5A790877BBBD536AD3409657957A78DABC5ECB335E048101AA5340595E853B443074F653433DC80C850D6DCA13C13B805FA3A45E24C2C9B7468F3D62C33947CFD176C8DE7713C03DF1F9598E3E09099AEB49CC00662E6EC1FB7355CCCC58A309972FF957CAF4",
+        NumberStyles.HexNumber);
+
     private static BigInteger _B = BigInteger.Parse(
         "01C3EB24A247FD5E63D291BEFD4A7F2C33EF40D2EDAF9A494A33A7E87AB081A6E45817FE0A730BACB2033A9FC9C21F21BB147597F95B76F42297E71B0FDDB717CE70C75A7D539F857A8A24ABF5AC00B0F6DF0D906A3397487DCB56356F3A2A764AB91310F279EBBADE7200B77126EBB30E1883B9BBA57F1F2C034467BE2EFFCE",
         NumberStyles.HexNumber);
@@ -108,12 +112,12 @@ public class Program
 
     public static void GeraValorA()
     {
-        var aStr = BitConverter.ToString(_a.ToByteArray()).Replace("-", null);
+        var aStr = _a.ToString("X");
         AnsiConsole.MarkupLine("\n[green]a:[/]");
         AnsiConsole.WriteLine(aStr);
 
         var A = BigInteger.ModPow(_g, _a, _p);
-        var AStr = BitConverter.ToString(A.ToByteArray()).Replace("-", null);
+        var AStr = A.ToString("X");
         ClipboardService.SetText(AStr);
         AnsiConsole.MarkupLine("\n[green]A:[/] (should be on your clipboard now)");
         AnsiConsole.WriteLine(AStr);
